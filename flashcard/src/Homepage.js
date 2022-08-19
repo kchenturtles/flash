@@ -22,6 +22,7 @@ export function Homepage() {
     const [cardNumber, changeCard] = useState(0);
     const [cardArray, setCardArray] = useState(new Array(new Card("", "")));
     const [numCards, setNumCards] = useState(localStorage.length);
+    const [definitionPopUp, setDefinitionPopUp] = useState(false);
 
    useEffect(() => {
       var cards = new Array();
@@ -62,9 +63,9 @@ export function Homepage() {
         const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${term}`);
         if(response.status == "404") {
           console.log("uh-oh");
-          alert("Not a valed");
+          alert("Not a valid term");
         }
-        if(response.ok) {
+        else if(response.ok) {
           const json = await response.json();
           console.log(json[0].meanings[1].definitions[0].definition);
           const definition = json[0].meanings[0].definitions[0].definition;
@@ -78,7 +79,7 @@ export function Homepage() {
            return definition;
           
         } else {
-          alert("Not a valid term");
+          alert("Something went wrong, please try again");
         }
     }
 
