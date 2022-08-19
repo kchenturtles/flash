@@ -24,6 +24,7 @@ export function Homepage() {
     const [numCards, setNumCards] = useState(localStorage.length);
 
    useEffect(() => {
+     localStorage.clear();
       var cards = new Array();
       console.log(localStorage.length);
       for(let i = 0; i < localStorage.length; i++) {
@@ -112,7 +113,7 @@ export function Homepage() {
             </div>
         <button id = "flip" className="center" onClick = {() => {flipCard(!cardSide)}}>Flip Card</button>
         <button id="change" onClick = {() => 
-         { if(cardNumber == numCards-1) {
+         { if(cardNumber >= numCards-1) {
               changeCard(0);
           } else {
             changeCard(cardNumber + 1)
