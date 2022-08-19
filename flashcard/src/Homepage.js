@@ -38,8 +38,8 @@ export function Homepage() {
     function addWord(event) {
       event.preventDefault();
         let text = document.querySelector('#name').value;
-        if(text.includes(',')) {
-            let t = text.split(',');
+        if(text.includes('/')) {
+            let t = text.split('/');
             let c = new Card(t[0], t[1]);
             let newArray = cardArray;
             newArray.push(c);
