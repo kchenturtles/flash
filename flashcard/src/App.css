@@ -28,6 +28,10 @@
   color: #61dafb;
 }
 
+ul {
+  list-style-type: none;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -80,7 +84,6 @@ width: 50%;
   text-align: left;
   padding-left: 5%;
   font-weight: bold;
-  list-style: none;
 }
 
 .definitionsList {

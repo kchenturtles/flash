@@ -121,7 +121,7 @@ export function Homepage() {
       return (
         <div className = "definitions">
         <ul>
-         {definitionsArray.map((definition) => <div><input type="checkbox" /> <li>{definition}</li></div>)}
+         {definitionsArray.map((definition) => <li><input type="checkbox" />{definition}</li>)}
         </ul>
         </div>
        );
