@@ -22,9 +22,8 @@ export function Homepage() {
     const [cardNumber, changeCard] = useState(0);
     const [cardArray, setCardArray] = useState(new Array(new Card("", "")));
     const [numCards, setNumCards] = useState(localStorage.length);
-
+    localStorage.clear();
    useEffect(() => {
-     localStorage.clear();
       var cards = new Array();
       console.log(localStorage.length);
       for(let i = 0; i < localStorage.length; i++) {
