@@ -13,6 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // );
 root.render(
   <React.StrictMode>
+    <title>Flash</title>
     <h1>Flashcard Maker</h1>
     <App />
   </React.StrictMode>
