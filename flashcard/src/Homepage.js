@@ -112,7 +112,7 @@ export function Homepage() {
             </div>
         <button id = "flip" className="center" onClick = {() => {flipCard(!cardSide)}}>Flip Card</button>
         <button id="change" onClick = {() => 
-         { if(cardNumber == numCards-1) {
+         { if(cardNumber >= numCards-1) {
               changeCard(0);
           } else {
             changeCard(cardNumber + 1)
