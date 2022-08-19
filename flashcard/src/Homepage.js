@@ -31,7 +31,7 @@ export function Homepage() {
         cards.push(c);
       }
         if(cards) {
-            setCardArray(cards);
+            setCardArray(cards); 
         }
    }, [cardNumber]);
    
