@@ -60,6 +60,10 @@ export function Homepage() {
 
     async function getDefinition(term) {
         const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${term}`);
+        if(response.status == "404") {
+          console.log("uh-oh");
+          alert("Not a valed");
+        }
         if(response.ok) {
           const json = await response.json();
           console.log(json[0].meanings[1].definitions[0].definition);
