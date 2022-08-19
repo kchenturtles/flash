@@ -48,7 +48,7 @@ h1 {
 }
 
 .card {
-  height: 500px;
+  min-height: 500px;
   width: 1000px;
   background-color:#ffffff;
   border: 2px #000000 solid;
@@ -69,12 +69,24 @@ width: 50%;
 }
 
 .definition {
-  text-align: center;
   font-weight: bold;
   align-content: center;
   text-size-adjust: auto;
   max-width: 300px;
   max-height: 200px;
+}
+
+.definitions {
+  text-align: left;
+  padding-left: 5%;
+  font-weight: bold;
+  list-style: none;
+}
+
+.definitionsList {
+  padding-bottom: 10%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .topper {

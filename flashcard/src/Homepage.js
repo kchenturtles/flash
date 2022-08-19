@@ -23,8 +23,10 @@ export function Homepage() {
     const [cardArray, setCardArray] = useState(new Array(new Card("", "")));
     const [numCards, setNumCards] = useState(localStorage.length);
     const [definitionPopUp, setDefinitionPopUp] = useState(false);
+    const [definitionsArray, setDefinitionsArray] = useState([]);
 
    useEffect(() => {
+      // localStorage.clear();
       var cards = new Array();
       console.log(localStorage.length);
       for(let i = 0; i < localStorage.length; i++) {
@@ -41,9 +43,25 @@ export function Homepage() {
         let text = document.querySelector('#name').value;
         if(text.includes('/')) {
             let t = text.split('/');
-            let c = new Card(t[0], t[1]);
+            let defString = t[1];
+            console.log(defString);
+            if(defString.includes(',')) {
+               const defs = defString.split(',');
+               console.log(defs);
+               var newString = "";
+               defs.map((def) => {
+                  newString += def.trim();
+                  newString += "\n";
+                  console.log(newString);
+               });
+               defString = newString;
+               console.log(defString);
+               console.log('Hey');
+            } 
+            let c = new Card(t[0], defString);
+             console.log(c);
             let newArray = cardArray;
-            newArray.push(c);
+             newArray.push(c);
             console.log(newArray);
             setCardArray(newArray);
             setNumCards(numCards + 1);
@@ -53,9 +71,8 @@ export function Homepage() {
           if(term) {
             const definition = async() => { const response = await getDefinition(term)};
             definition();
+            setDefinitionPopUp(true);
           }
-          
-          
         }
     }
 
@@ -64,10 +81,11 @@ export function Homepage() {
         if(response.status == "404") {
           console.log("uh-oh");
           alert("Not a valid term");
+          setDefinitionPopUp(false);
         }
         else if(response.ok) {
           const json = await response.json();
-          console.log(json[0].meanings[1].definitions[0].definition);
+          console.log(json[0].meanings[0].definitions[0].definition);
           const definition = json[0].meanings[0].definitions[0].definition;
             let c = new Card(term, JSON.stringify(definition));
               let newArray = cardArray;
@@ -76,11 +94,37 @@ export function Homepage() {
               setNumCards(numCards + 1);
               localStorage.setItem(c.term, c.definition);
               console.log(localStorage.getItem(c.term));
-           return definition;
+          console.log(JSON.stringify(json));
+          var newA = definitionsArray;
+          newA = [];
+          setDefinitionsArray(newA);
+          for(var key of Object.keys(json)) {
+            json[key].meanings.forEach((meaning) => {
+              meaning.definitions.forEach((def) => {
+                console.log(def);
+                newA.push(def.definition);
+                setDefinitionsArray(newA);
+              });
+            });
+          }
+          console.log(definitionsArray);
+         
+          return definition;
           
         } else {
           alert("Something went wrong, please try again");
+          setDefinitionPopUp(false);
         }
+    }
+
+    function DefinitionCheckList() {
+      return (
+        <div className = "definitions">
+        <ul>
+         {definitionsArray.map((definition) => <div><input type="checkbox" /> <li>{definition}</li></div>)}
+        </ul>
+        </div>
+       );
     }
 
     function Side() {
@@ -98,14 +142,32 @@ export function Homepage() {
       } 
       if(cardSide) {
        return <div className = "term">{cardArray[cardNumber].term}</div>;
-      //  return <p>asdf</p>
       } else {
-       return <div className = "definition">{cardArray[cardNumber].definition}</div>;
-      //  return <p>asdfasdf</p>
+        if(cardArray[cardNumber].definition.includes("\n")) {
+          var definitions = cardArray[cardNumber].definition.split("\n");
+         definitions = definitions.filter((def) => def != ' ' && def != '');
+          console.log(definitions);
+          return(<div className = "definition">
+            <ol>
+              {definitions.map((def) => <li>{def}</li>)}
+            </ol>
+          </div>);
+        }
+       return <div className = "definition">{cardArray[cardNumber].definition}
+         </div>;
       }
     }
 
-    return (
+    if(definitionPopUp) {
+      return(
+        <div id = "App" className = "definitionsList">
+            <h2>Select Definition...</h2>
+            <DefinitionCheckList />
+            <button onClick = {() => {setDefinitionPopUp(false)}}> Close Definitions List</button>
+        </div>
+      );
+    } else {
+      return (
         <div id = "App">
             <div className="card center">
                 <div id="num" className = "topper">{cardNumber + 1}/{numCards}</div>
@@ -120,8 +182,10 @@ export function Homepage() {
         <button id="change" onClick = {() => 
          { if(cardNumber >= numCards-1) {
               changeCard(0);
+              flipCard(true);
           } else {
-            changeCard(cardNumber + 1)
+            changeCard(cardNumber + 1);
+            flipCard(true);
           }
         }
         }
@@ -138,6 +202,9 @@ export function Homepage() {
         </p>
         </div>
      );
+    }
+
+   
 
     // return (
     //     <div id = "App">
