@@ -1,5 +1,14 @@
 .App {
   text-align: center;
+  display: grid;
+  min-width: 100%;
+  grid-template-areas: 
+  'header header header'
+  'left-menu card right-menu'
+  'footer footer footer';
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 10% 1fr 10%;
+  gap:0px;
 }
 
 .App-logo {
@@ -41,14 +50,15 @@ ul {
   }
 }
 
-body {
+#App {
   display: grid;
-  
-}
-
-h1 {
-  background:#00ff00;
-  text-align: center;
+  min-width: 100%;
+  grid-template-areas: 
+  'left-menu card right-menu'
+  'footer footer footer';
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr 10%;
+  gap:0px;
 }
 
 .card {
@@ -59,14 +69,32 @@ h1 {
 }
 
 #header {
-
+  grid-area: header;
+  background:#00a8f3;
+  text-align: center;
 }
 
+#leftmenu {
+  grid-area: left-menu;
+}
+
+#rightmenu {
+  grid-area: right-menu;
+  background-color: aqua;
+}
+
+#footer {
+  grid-area: footer;
+}
+
+#card {
+  grid-area:card;
+}
 .center {
 display: block;
 margin-left: auto;
 margin-right: auto;
-width: 50%;
+/* width: 50%; */
 }
 
 .term {

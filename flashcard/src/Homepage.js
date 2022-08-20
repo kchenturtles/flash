@@ -226,7 +226,7 @@ export function Homepage() {
     } else {
       return (
         <div id = "App">
-            <div className="card center">
+            <div className="card center" id = "card">
                 <button onClick = {deleteCard}> Delete Card </button>
                 <div id="num" className = "topper">{cardNumber + 1}/{numCards}</div>
                 <div id = "id" className = "topper">
@@ -236,7 +236,8 @@ export function Homepage() {
                   <Term />
                 </div>
             </div>
-        <button id = "flip" className="center" onClick = {() => {flipCard(!cardSide)}}>Flip Card</button>
+        <div id = "leftmenu">
+        <button id = "flip" onClick = {() => {flipCard(!cardSide)}}>Flip Card</button>
         <button id="change" onClick = {() => 
          { if(cardNumber >= numCards-1) {
               changeCard(0);
@@ -248,17 +249,16 @@ export function Homepage() {
         }
         }
           >Next Card</button>
-        <div>
-           <input id="file" type="text"></input>
-           <button> Upload File Here</button>
-        </div>
-        <p>
-        <form onSubmit={addWord}>
+          <form onSubmit={addWord}>
             <input id="name" placeholder = "Enter word or pairing" type="text"/>
             <input type="submit"/>
         </form>
         <button onClick = {clearFlashcards}>Clear Flashcards</button>
-        </p>
+        </div>
+        <div id = "rightmenu">
+           <input id="file" type="text"></input>
+           <button> Upload File Here</button>
+        </div>
         </div>
      );
     }
