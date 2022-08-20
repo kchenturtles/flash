@@ -7,14 +7,6 @@ import { useEffect, useState, ChangeEvent, FormEvent} from 'react';
         this.term = term;
         this.definition = definition;
     }
-
-    getTerm() {
-      return this.term;
-    }
-
-    getDefinition() {
-      return this.definition;
-    }
  }
  let array = new Array();
 export function Homepage() {
@@ -24,9 +16,11 @@ export function Homepage() {
     const [numCards, setNumCards] = useState(localStorage.length);
     const [definitionPopUp, setDefinitionPopUp] = useState(false);
     const [definitionsArray, setDefinitionsArray] = useState([]);
+    var definitionPopUpDefinition = "";
+    const [currentTerm, setCurrentTerm] = useState("");
 
    useEffect(() => {
-      // localStorage.clear();
+        // localStorage.clear();
       var cards = new Array();
       console.log(localStorage.length);
       for(let i = 0; i < localStorage.length; i++) {
@@ -60,20 +54,33 @@ export function Homepage() {
             } 
             let c = new Card(t[0], defString);
              console.log(c);
-            let newArray = cardArray;
+            if(alreadyStored(c.term)) {
+              alert("Your set already contains this term! Edit the definition or delete it.");
+            } else {
+              let newArray = cardArray;
              newArray.push(c);
             console.log(newArray);
             setCardArray(newArray);
             setNumCards(numCards + 1);
-            localStorage.setItem(c.term, c.definition);
+              localStorage.setItem(c.term, c.definition);
+            }
         } else {
           let term = document.querySelector('#name').value;
           if(term) {
             const definition = async() => { const response = await getDefinition(term)};
             definition();
+            setCurrentTerm(term);
             setDefinitionPopUp(true);
           }
         }
+    }
+
+    function alreadyStored(k) {
+      console.log(localStorage.getItem(k));
+      if(localStorage.getItem(k) != undefined || localStorage.getItem(k) != null) {
+        return true;
+      }
+      return false;
     }
 
     async function getDefinition(term) {
@@ -87,13 +94,6 @@ export function Homepage() {
           const json = await response.json();
           console.log(json[0].meanings[0].definitions[0].definition);
           const definition = json[0].meanings[0].definitions[0].definition;
-            let c = new Card(term, JSON.stringify(definition));
-              let newArray = cardArray;
-              newArray.push(c);
-              setCardArray(newArray);
-              setNumCards(numCards + 1);
-              localStorage.setItem(c.term, c.definition);
-              console.log(localStorage.getItem(c.term));
           console.log(JSON.stringify(json));
           var newA = definitionsArray;
           newA = [];
@@ -117,11 +117,48 @@ export function Homepage() {
         }
     }
 
+    function handleCheck(event) {
+      if(event.target.checked) {
+        console.log("checked");
+        console.log(event.target.parentElement.innerHTML);
+        var parent = event.target.parentElement;
+        var child = parent.querySelector('#this-definition');
+        const definition = child.innerHTML.replace("\"", '');
+        definitionPopUpDefinition += definition;
+        definitionPopUpDefinition += "\n";
+        console.log(definitionPopUpDefinition);
+      } else {
+        console.log("unchecked");
+        var parent = event.target.parentElement;
+        var child = parent.querySelector('#this-definition');
+        const definition = child.innerHTML.replace("\"", '');
+        definitionPopUpDefinition = definitionPopUpDefinition.replace(definition, '');
+        console.log(definitionPopUpDefinition);
+      }
+    }
+
+    function submitDefinition() {           
+     if(alreadyStored(currentTerm)) {
+      alert("Your set already contains this term! Edit the definition or delete it.");
+     } else {
+      var newArray = cardArray;
+      newArray.push(new Card(currentTerm, definitionPopUpDefinition));
+      setNumCards(numCards + 1);
+      setCardArray(newArray);
+      localStorage.setItem(currentTerm, definitionPopUpDefinition);
+      console.log(newArray);
+      console.log(cardArray);
+     }
+      definitionPopUpDefinition = "";
+      setCurrentTerm("");
+      setDefinitionPopUp(false);
+    }
+
     function DefinitionCheckList() {
       return (
         <div className = "definitions">
         <ul>
-         {definitionsArray.map((definition) => <li><input type="checkbox" />{definition}</li>)}
+         {definitionsArray.map((definition) => <li className = "definition-list-item"><input type="checkbox" onChange = {handleCheck}/><label id = "this-definition">{definition}</label></li>)}
         </ul>
         </div>
        );
@@ -163,7 +200,7 @@ export function Homepage() {
         <div id = "App" className = "definitionsList">
             <h2>Select Definition...</h2>
             <DefinitionCheckList />
-            <button onClick = {() => {setDefinitionPopUp(false)}}> Close Definitions List</button>
+            <button onClick = {submitDefinition}> Close Definitions List</button>
         </div>
       );
     } else {
