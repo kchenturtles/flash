@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 50px;
   pointer-events: none;
 }
 
@@ -56,6 +56,10 @@ h1 {
   width: 1000px;
   background-color:#ffffff;
   border: 2px #000000 solid;
+}
+
+#header {
+
 }
 
 .center {

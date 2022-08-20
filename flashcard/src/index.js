@@ -13,6 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // );
 root.render(
   <React.StrictMode>
+    <img src = {require ("./images/turtle-logo.png")} alt = "turtle-logo" className = "App-logo" />
     <h1>Flashcard Maker</h1>
     <App />
   </React.StrictMode>

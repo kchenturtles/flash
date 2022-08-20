@@ -8,7 +8,6 @@ import { useEffect, useState, ChangeEvent, FormEvent} from 'react';
         this.definition = definition;
     }
  }
- let array = new Array();
 export function Homepage() {
     const [cardSide, flipCard] = useState(true);
     const [cardNumber, changeCard] = useState(0);
@@ -49,8 +48,6 @@ export function Homepage() {
                   console.log(newString);
                });
                defString = newString;
-               console.log(defString);
-               console.log('Hey');
             } 
             let c = new Card(t[0], defString);
              console.log(c);
@@ -63,6 +60,8 @@ export function Homepage() {
             setCardArray(newArray);
             setNumCards(numCards + 1);
               localStorage.setItem(c.term, c.definition);
+              alert("New Flashcard Created!");
+              document.querySelector('#name').value = "";
             }
         } else {
           let term = document.querySelector('#name').value;
@@ -155,6 +154,26 @@ export function Homepage() {
       alert("New Flashcard Created!");
     }
 
+    function clearFlashcards() {
+      if(window.confirm("Clear all flashcards? This action cannot be reversed.")) {
+        localStorage.clear(); 
+        window.location.reload();
+      }
+    }
+
+    function deleteCard() {
+      if(window.confirm("Delete this card? This action cannot be reversed.")) {
+        const currentTerm = cardArray[cardNumber].term;
+        console.log(currentTerm);
+        const newArray = cardArray.filter((c) => c.term != currentTerm);
+        console.log(newArray);
+        setCardArray(newArray);
+        console.log(cardArray);
+        localStorage.removeItem(currentTerm);
+        setNumCards(numCards - 1);
+      }
+    }
+
     function DefinitionCheckList() {
       return (
         <div className = "definitions">
@@ -191,7 +210,7 @@ export function Homepage() {
             </ol>
           </div>);
         }
-       return <div className = "definition">{cardArray[cardNumber].definition}
+       return <div className = "definition"><ol><li>{cardArray[cardNumber].definition}</li></ol>
          </div>;
       }
     }
@@ -208,6 +227,7 @@ export function Homepage() {
       return (
         <div id = "App">
             <div className="card center">
+                <button onClick = {deleteCard}> Delete Card </button>
                 <div id="num" className = "topper">{cardNumber + 1}/{numCards}</div>
                 <div id = "id" className = "topper">
                   <Side />
@@ -237,42 +257,10 @@ export function Homepage() {
             <input id="name" placeholder = "Enter word or pairing" type="text"/>
             <input type="submit"/>
         </form>
+        <button onClick = {clearFlashcards}>Clear Flashcards</button>
         </p>
         </div>
      );
     }
-
-   
-
-    // return (
-    //     <div id = "App">
-    //         <div className="card center">
-    //             <div id="num" className = "topper">{cardNumber}/{cardNumber}</div>
-    //             <div id = "id" className = "topper">
-    //               <Side />
-    //             </div>
-    //             <p id="term" className = "term"></p>
-    //         </div>
-    //     <button id = "flip" className="center" onClick = {() => {flipCard(!cardSide)}}>Flip Card</button>
-    //     <button id="change" onClick = {() => 
-    //      { if(cardNumber == numCards) {
-    //           changeCard(0);
-    //       } else {
-    //         changeCard(cardNumber + 1)
-    //       }
-    //     }
-    //     }
-    //       >Next Card</button>
-    //     <div>
-    //        <input id="file" type="text"></input>
-    //        <button> Upload File Here</button>
-    //     </div>
-    //     <p>
-    //     <form onsubmit={addWord}>
-    //         <input id="name" placeholder = "Enter word or pairing" type="text"/>
-    //         <input type="submit"/>
-    //     </form>
-    //     </p>
-    //     </div>
-    //  );
+ 
 }
