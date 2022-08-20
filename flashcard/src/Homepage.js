@@ -152,6 +152,7 @@ export function Homepage() {
       definitionPopUpDefinition = "";
       setCurrentTerm("");
       setDefinitionPopUp(false);
+      alert("New Flashcard Created!");
     }
 
     function DefinitionCheckList() {
@@ -200,7 +201,7 @@ export function Homepage() {
         <div id = "App" className = "definitionsList">
             <h2>Select Definition...</h2>
             <DefinitionCheckList />
-            <button onClick = {submitDefinition}> Close Definitions List</button>
+            <button onClick = {submitDefinition}> Finish Definition Selection</button>
         </div>
       );
     } else {
