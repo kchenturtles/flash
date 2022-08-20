@@ -89,7 +89,7 @@ export function Homepage() {
           console.log("uh-oh");
           alert("Not a valid term");
           setDefinitionPopUp(false);
-        }
+        } 
         else if(response.ok) {
           const json = await response.json();
           console.log(json[0].meanings[0].definitions[0].definition);
