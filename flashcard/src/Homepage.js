@@ -17,6 +17,7 @@ export function Homepage() {
     const [definitionsArray, setDefinitionsArray] = useState([]);
     var definitionPopUpDefinition = "";
     const [currentTerm, setCurrentTerm] = useState("");
+    const [fileName, setFileName] = useState("");
 
    useEffect(() => {
         // localStorage.clear();
@@ -174,6 +175,12 @@ export function Homepage() {
       }
     }
 
+    function addFile(event) {
+      const files = document.querySelector("#file").files;
+      setFileName(files[0].name);
+      console.log(fileName);
+    }
+
     function DefinitionCheckList() {
       return (
         <div className = "definitions">
@@ -226,7 +233,8 @@ export function Homepage() {
     } else {
       return (
         <div id = "App">
-            <div className="card center" id = "card">
+          <div id = "card">
+          <div className="card center">
                 <button onClick = {deleteCard}> Delete Card </button>
                 <div id="num" className = "topper">{cardNumber + 1}/{numCards}</div>
                 <div id = "id" className = "topper">
@@ -236,9 +244,18 @@ export function Homepage() {
                   <Term />
                 </div>
             </div>
-        <div id = "leftmenu">
-        <button id = "flip" onClick = {() => {flipCard(!cardSide)}}>Flip Card</button>
-        <button id="change" onClick = {() => 
+            <button id = "flip" onClick = {() => {flipCard(!cardSide)}}>Flip Card</button>
+        <button id = "changeBackward" onClick = {() => {
+          if(cardNumber == 0) {
+            changeCard(numCards-1);
+            flipCard(true);
+        } else {
+          changeCard(cardNumber - 1);
+          flipCard(true);
+        }
+        }}>Previous</button>
+
+        <button id="changeForward" onClick = {() => 
          { if(cardNumber >= numCards-1) {
               changeCard(0);
               flipCard(true);
@@ -248,16 +265,27 @@ export function Homepage() {
           }
         }
         }
-          >Next Card</button>
+          >Next</button>
+          </div>
+            
+            
+        <div id = "leftmenu">
+        <div className = "spacer"></div>
+        <button id = "clear" onClick = {clearFlashcards}>Clear Flashcards</button>
+        <div className = "spacer"></div>
+        <form onSubmit = {addFile}>
+          <div>Upload File Here</div>
+        <input id="file" type="file"></input>
+        <button>Select file</button>
+        </form>
+        <div className = "spacer"></div>
           <form onSubmit={addWord}>
             <input id="name" placeholder = "Enter word or pairing" type="text"/>
-            <input type="submit"/>
+            <input id = "submit" type="submit"/>
         </form>
-        <button onClick = {clearFlashcards}>Clear Flashcards</button>
         </div>
         <div id = "rightmenu">
-           <input id="file" type="text"></input>
-           <button> Upload File Here</button>
+           
         </div>
         </div>
      );

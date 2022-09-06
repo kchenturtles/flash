@@ -68,19 +68,35 @@ ul {
   border: 2px #000000 solid;
 }
 
+h1 {
+  margin: 0px;
+}
+
 #header {
   grid-area: header;
-  background:#00a8f3;
+  background:#870bf4;
   text-align: center;
+  gap: 0px;
+  margin: 0px;
+}
+
+#root {
+  gap: 0px;
 }
 
 #leftmenu {
   grid-area: left-menu;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
 #rightmenu {
   grid-area: right-menu;
-  background-color: aqua;
+}
+
+.spacer {
+  min-height: 50px;
+  background-color: white;
 }
 
 #footer {
@@ -90,6 +106,48 @@ ul {
 #card {
   grid-area:card;
 }
+
+#flip {
+  margin-left: 12%;
+  margin-right: 100px;
+  margin-bottom: 1%;
+  width: 75%;
+  height:50px;
+  display: block;
+  background-color: #00a8f3;
+  border: 0px;
+  font-size: 20px;
+  color: white;
+}
+
+#flip:hover {
+ background-color: aqua;   
+}
+
+#changeForward:hover {
+  background-color: darkgreen;
+}
+
+#changeBackward:hover {
+  background-color: darkgreen;
+}
+
+#changeForward{
+  font-size: 20px;
+  width: 10%;
+}
+
+#clear {
+  font-size: 20px;
+}
+
+#changeBackward {
+  font-size: 20px;
+  margin-right: 2%;
+  margin-left: 38%;
+  width: 10%;
+}
+
 .center {
 display: block;
 margin-left: auto;
@@ -102,6 +160,10 @@ margin-right: auto;
   text-align:center;
   font-weight:bold;
   margin-top:100px;
+}
+
+body {
+  margin: 0px;
 }
 
 .definition {
