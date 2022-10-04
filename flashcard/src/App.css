@@ -74,33 +74,39 @@ h1 {
 
 #header {
   grid-area: header;
-  background:#870bf4;
+  background: #ffffff;
   text-align: center;
   gap: 0px;
   margin: 0px;
+  border-bottom: black;
+  border-bottom-width: thin;
 }
 
 #root {
   gap: 0px;
+  background-color:#E6E6FA;
 }
 
 #leftmenu {
   grid-area: left-menu;
   margin-left: 20px;
   margin-top: 20px;
+  background-color:#E6E6FA;
 }
 
 #rightmenu {
   grid-area: right-menu;
+  background-color:#E6E6FA;
 }
 
 .spacer {
   min-height: 50px;
-  background-color: white;
+  background-color:#E6E6FA;;
 }
 
 #footer {
   grid-area: footer;
+  background-color:#E6E6FA;
 }
 
 #card {
@@ -115,7 +121,8 @@ h1 {
   height:50px;
   display: block;
   background-color: #00a8f3;
-  border: 0px;
+  border: 2px;
+  border-color: black;
   font-size: 20px;
   color: white;
 }
@@ -164,6 +171,7 @@ margin-right: auto;
 
 body {
   margin: 0px;
+  background-color:#E6E6FA;
 }
 
 .definition {
