@@ -100,9 +100,12 @@ export function Homepage() {
           setDefinitionsArray(newA);
           for(var key of Object.keys(json)) {
             json[key].meanings.forEach((meaning) => {
+              const partOfSpeech = meaning.partOfSpeech;
+              console.log(partOfSpeech);
               meaning.definitions.forEach((def) => {
                 console.log(def);
-                newA.push(def.definition);
+                const newString = "(" + partOfSpeech + ") " + def.definition;
+                newA.push(newString);
                 setDefinitionsArray(newA);
               });
             });
@@ -187,6 +190,7 @@ export function Homepage() {
         <ul>
          {definitionsArray.map((definition) => <li className = "definition-list-item"><input type="checkbox" onChange = {handleCheck}/><label id = "this-definition">{definition}</label></li>)}
         </ul>
+        <button className = "definitions" onClick = {submitDefinition}> Finish Definition Selection</button>
         </div>
        );
     }
@@ -224,10 +228,10 @@ export function Homepage() {
 
     if(definitionPopUp) {
       return(
-        <div id = "App" className = "definitionsList">
+        <div id = "App" id = "card" className = "definitionsList">
             <h2>Select Definition...</h2>
             <DefinitionCheckList />
-            <button onClick = {submitDefinition}> Finish Definition Selection</button>
+            
         </div>
       );
     } else {
